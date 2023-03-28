@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\PersonController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
+Route::group(['prefix' => 'people', 'as' => 'member.'], function () {
+    Route::get('create', [PersonController::class, 'create'])
+        ->name('create');
+    Route::post('/', [PersonController::class, 'store'])
+        ->name('store');
+    Route::get('/', [PersonController::class, 'index'])
+        ->name('index');
+    Route::get('{person}', [PersonController::class, 'show'])
+        ->name('show');
+    Route::delete('{person}', [PersonController::class, 'destroy'])
+        ->name('delete');
 });
+
+Auth::routes();
+
+
