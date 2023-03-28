@@ -31,20 +31,18 @@ class PersonTest extends TestCase
 
         $selectedInterests = $interests->random(3);
 
-
         $this->person->interests()->sync($selectedInterests);
 
         $this->assertInstanceOf(Interest::class, $this->person->interests->first());
-//        $this->assertInstanceOf(Interest::class, $this->person->interests);
     }
 
     /** @test */
-    public function has_bloodType()
+    public function has_bloodtype()
     {
         BloodType::factory()
-            ->count(1)
+            ->for($this->person)
             ->create();
 
-        $this->assertInstanceOf(BloodType::class, $this->person->bloodtype->first());
+        $this->assertInstanceOf(BloodType::class, $this->person->bloodtype);
     }
 }
