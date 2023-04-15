@@ -40,7 +40,7 @@ class PersonTest extends TestCase
     public function has_bloodtype()
     {
         BloodType::factory()
-            ->for($this->person)
+            ->for($this->person, "person")
             ->create();
 
         $this->assertInstanceOf(BloodType::class, $this->person->bloodtype);
